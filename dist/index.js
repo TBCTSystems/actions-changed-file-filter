@@ -1591,7 +1591,7 @@ function resolveMergeBase(event, baseSha, headSha) {
         if (event === 'pull_request') {
             return yield git_1.getMergeBase(baseSha, headSha);
         }
-        return core.getInput('base');
+        return baseSha;
     });
 }
 function run() {
@@ -1601,7 +1601,7 @@ function run() {
             yield git_1.unshallow();
             const branchBaseSha = yield getBaseSha(event);
             const headSha = yield getHeadSha();
-            const mergeBase = yield (resolveMergeBase(event, branchBaseSha, headSha));
+            const mergeBase = yield resolveMergeBase(event, branchBaseSha, headSha);
             core.debug(`brancBaseSha: ${branchBaseSha}`);
             core.debug(`headSha: ${headSha}`);
             core.debug(`mergeBase: ${mergeBase}`);

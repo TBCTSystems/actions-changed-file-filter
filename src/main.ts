@@ -30,7 +30,7 @@ async function resolveMergeBase(
   if (event === 'pull_request') {
     return await getMergeBase(baseSha, headSha)
   }
-  return core.getInput('base')
+  return baseSha
 }
 
 async function run(): Promise<void> {
