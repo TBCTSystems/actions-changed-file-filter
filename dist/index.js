@@ -3868,6 +3868,11 @@ function setOutput(name, value) {
     process.stdout.write(cmdStr + os.EOL); 
 }
 exports.setOutput = setOutput;
+
+function setOutput2(name, value) {
+    command_1.issueCommand('set-output', { name }, value);
+}
+exports.setOutput2 = setOutput2;
 //-----------------------------------------------------------------------
 // Results
 //-----------------------------------------------------------------------
