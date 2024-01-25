@@ -3864,6 +3864,7 @@ exports.getInput = getInput;
  * @param     value    value to store
  */
 function setOutput(name, value) {
+    console.log(command_1.issueCommand('set-output', { name }, value))
     command_1.issueCommand('set-output', { name }, value);
     // const cmdStr = `"{${name}}={${value}}" >> $GITHUB_OUTPUT`; 
     // process.stdout.write(cmdStr + os.EOL); 
