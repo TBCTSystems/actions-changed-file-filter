@@ -3894,14 +3894,15 @@ exports.getInput = getInput;
  * @param     value    value to store
  */
 function setOutput(name, value) {
-    command_1.issueCommand('set-output', { name }, value);
+    // command_1.issueCommand('set-output', { name }, value);
+    command_1.issueSetOutputCommand(name, value)
 }
 exports.setOutput = setOutput;
 
-function issueSetOutputCommand(name, value){
-  command_1.issueSetOutputCommand(name, value)
-}
-exports.issueSetOutputCommand = issueSetOutputCommand;
+// function issueSetOutputCommand(name, value){
+//   command_1.issueSetOutputCommand(name, value)
+// }
+// exports.issueSetOutputCommand = issueSetOutputCommand;
 
 //-----------------------------------------------------------------------
 // Results
