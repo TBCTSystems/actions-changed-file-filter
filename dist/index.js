@@ -2062,6 +2062,33 @@ function escape(s) {
         .replace(/]/g, '%5D')
         .replace(/;/g, '%3B');
 }
+
+///////
+////     Setting output using Environment Files
+///////
+function issueSetOutputCommand(envName, envValue) {
+  const cmd = new OutputCommand(envName, envValue);
+  process.stdout.write(cmd.toString() + os.EOL);
+  console.log('From issueCommand: ', cmd.toString() + os.EOL)
+}
+exports.issueSetOutputCommand = issueSetOutputCommand;
+function issueSetOutput(envName, envValue) {
+  issueSetOutputCommand(envName, envValue);
+}
+exports.issueSetOutput = issueSetOutput;
+
+class OutputCommand {
+  constructor(envName, envValue) {
+      this.envName = envName;
+      this.envValue = envValue;
+  }
+  toString() {
+    let cmdStr = `"${this.envName}=${this.envValue}" >> $GITHUB_OUTPUT`;
+    return cmdStr;
+  }
+}
+
+
 //# sourceMappingURL=command.js.map
 
 /***/ }),
@@ -3868,13 +3895,13 @@ exports.getInput = getInput;
  */
 function setOutput(name, value) {
     command_1.issueCommand('set-output', { name }, value);
-    // const cmdStr = `"{${name}}={${value}}" >> $GITHUB_OUTPUT`; 
-    // process.stdout.write(cmdStr + os.EOL); 
-    
-    const cmd = command_1.issueCommand('set-output', { name }, value);
-    console.log(`Command to set output: ${cmd}`);
 }
 exports.setOutput = setOutput;
+
+function issueSetOutputCommand(name, value){
+  command_1.issueSetOutputCommand(name, value)
+}
+exports.issueSetOutputCommand = issueSetOutputCommand;
 
 //-----------------------------------------------------------------------
 // Results
