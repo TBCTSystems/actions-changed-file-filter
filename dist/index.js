@@ -3863,16 +3863,12 @@ exports.getInput = getInput;
  * @param     value    value to store
  */
 function setOutput(name, value) {
-    // command_1.issueCommand('set-output', { name }, value);
-    const cmdStr = `"{${name}}={${value}}" >> $GITHUB_OUTPUT`; 
-    process.stdout.write(cmdStr + os.EOL); 
+    command_1.issueCommand('set-output', { name }, value);
+    // const cmdStr = `"{${name}}={${value}}" >> $GITHUB_OUTPUT`; 
+    // process.stdout.write(cmdStr + os.EOL); 
 }
 exports.setOutput = setOutput;
 
-function setOutput2(name, value) {
-    command_1.issueCommand('set-output', { name }, value);
-}
-exports.setOutput2 = setOutput2;
 //-----------------------------------------------------------------------
 // Results
 //-----------------------------------------------------------------------
