@@ -2010,6 +2010,7 @@ function issueCommand(command, properties, message) {
     const cmd = new Command(command, properties, message);
     console.log(cmd)
     process.stdout.write(cmd.toString() + os.EOL);
+    console.log(cmd.toString())
 }
 exports.issueCommand = issueCommand;
 function issue(name, message = '') {
