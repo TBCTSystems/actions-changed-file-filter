@@ -2008,7 +2008,6 @@ const os = __webpack_require__(87);
  */
 function issueCommand(command, properties, message) {
     const cmd = new Command(command, properties, message);
-    console.log(cmd.toString())
     process.stdout.write(cmd.toString() + os.EOL);
 }
 exports.issueCommand = issueCommand;
@@ -2046,6 +2045,7 @@ class Command {
         // call .replace() if message is not a string for some reason
         const message = `${this.message || ''}`;
         cmdStr += escapeData(message);
+        console.log(cmdStr)
         return cmdStr;
     }
 }
@@ -3864,7 +3864,6 @@ exports.getInput = getInput;
  * @param     value    value to store
  */
 function setOutput(name, value) {
-    console.log(command_1.issueCommand('set-output', { name }, value))
     command_1.issueCommand('set-output', { name }, value);
     // const cmdStr = `"{${name}}={${value}}" >> $GITHUB_OUTPUT`; 
     // process.stdout.write(cmdStr + os.EOL); 
