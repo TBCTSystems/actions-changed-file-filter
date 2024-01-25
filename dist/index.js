@@ -2048,7 +2048,7 @@ class Command {
         // call .replace() if message is not a string for some reason
         const message = `${this.message || ''}`;
         cmdStr += escapeData(message);
-        console.log('From Command class - toString: ', cmdStr)
+        // console.log('From Command class - toString: ', cmdStr)
         return cmdStr;
     }
 }
