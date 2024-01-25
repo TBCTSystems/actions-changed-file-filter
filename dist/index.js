@@ -2008,6 +2008,7 @@ const os = __webpack_require__(87);
  */
 function issueCommand(command, properties, message) {
     const cmd = new Command(command, properties, message);
+    console.log(cmd)
     process.stdout.write(cmd.toString() + os.EOL);
 }
 exports.issueCommand = issueCommand;
