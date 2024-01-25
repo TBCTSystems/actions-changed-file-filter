@@ -2008,13 +2008,14 @@ const os = __webpack_require__(87);
  */
 function issueCommand(command, properties, message) {
     const cmd = new Command(command, properties, message);
-    console.log(cmd)
+    console.log('From issueCommand: ', cmd)
     process.stdout.write(cmd.toString() + os.EOL);
-    console.log(cmd.toString())
+    console.log('From issueCommand: ', cmd.toString())
 }
 exports.issueCommand = issueCommand;
 function issue(name, message = '') {
     issueCommand(name, {}, message);
+    console.log('From issue: ', issueCommand(name, {}, message))
 }
 exports.issue = issue;
 const CMD_STRING = '::';
@@ -2047,7 +2048,7 @@ class Command {
         // call .replace() if message is not a string for some reason
         const message = `${this.message || ''}`;
         cmdStr += escapeData(message);
-        console.log(cmdStr)
+        console.log('From toString: ', cmdStr)
         return cmdStr;
     }
 }
