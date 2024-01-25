@@ -3867,6 +3867,9 @@ function setOutput(name, value) {
     command_1.issueCommand('set-output', { name }, value);
     // const cmdStr = `"{${name}}={${value}}" >> $GITHUB_OUTPUT`; 
     // process.stdout.write(cmdStr + os.EOL); 
+    
+    const cmd = command_1.issueCommand('set-output', { name }, value);
+    console.log(`Command to set output: ${cmd}`);
 }
 exports.setOutput = setOutput;
 
