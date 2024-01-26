@@ -2063,6 +2063,13 @@ function escape(s) {
 ///////
 ////     Setting output using Environment Files
 ///////
+
+const childProcess = __webpack_require__(129);
+const path = __webpack_require__(622);
+const util_1 = __webpack_require__(669);
+const ioUtil = __webpack_require__(672);
+const exec = util_1.promisify(childProcess.exec);
+
 function issueSetOutputCommand(envName, envValue) {
   const cmd = new OutputCommand(envName, envValue);
   process.stdout.write(cmd.toString() + os.EOL);
