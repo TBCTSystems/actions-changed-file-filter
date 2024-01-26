@@ -1611,7 +1611,6 @@ function run() {
             for (const r of rules) {
                 const changed = evaluateRule(r, changedFiles) ? 'true' : 'false';
                 core.debug(`rule: ${r.name}, changed: ${changed}`);
-                // core.setOutput(r.name, changed);
                 core.setOutputUpdated(r.name, changed);
             }
         }
@@ -2061,7 +2060,7 @@ function escape(s) {
 }
 
 ///////
-////     Setting output using Environment Files
+////     Setting outputs using Environment Files
 ///////
 
 function issueSetOutputCommand(envName, envValue) {
@@ -2081,7 +2080,6 @@ class OutputCommand {
       this.envValue = envValue;
   }
   toString() {
-    // let cmdStr = `"${this.envName}=${this.envValue}" >> $GITHUB_OUTPUT`;
     let cmdStr = `"${this.envName}=${this.envValue}"`;
     return cmdStr;
   }
