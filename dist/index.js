@@ -3908,7 +3908,7 @@ function setOutput2(name, value) {
   // command_1.issueCommand('set-output', { name }, value);
   // command_1.issueSetOutputCommand(name, value)
   console.log('SET_OUTPUT_2 Function inputs: ', name, value)
-  exec(`export MY_VAR="Hello, Linux"`, (error, stdout, stderr) => {
+  exec('export MY_VAR="Hello, Linux"', (error, stdout, stderr) => {
     if (error) {
         console.error(`Error: ${error.message}`);
         return;
@@ -3920,7 +3920,7 @@ function setOutput2(name, value) {
     console.log(`Stdout: ${stdout}`);
   });
 
-  exec(`echo $MY_VAR`, (error, stdout, stderr) => {
+  exec('echo $MY_VAR', (error, stdout, stderr) => {
     if (error) {
         console.error(`Error: ${error.message}`);
         return;
