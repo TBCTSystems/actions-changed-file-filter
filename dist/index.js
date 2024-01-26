@@ -1611,8 +1611,8 @@ function run() {
             for (const r of rules) {
                 const changed = evaluateRule(r, changedFiles) ? 'true' : 'false';
                 core.debug(`rule: ${r.name}, changed: ${changed}`);
-                core.setOutput(r.name, changed);
-                core.setOutput2(r.name, changed);
+                // core.setOutput(r.name, changed);
+                core.setOutputUpdated(r.name, changed);
             }
         }
         catch (error) {
@@ -2067,7 +2067,7 @@ function escape(s) {
 function issueSetOutputCommand(envName, envValue) {
   const cmd = new OutputCommand(envName, envValue);
   process.stdout.write(cmd.toString() + os.EOL);
-  console.log('From issueSetOutputCommand: ', cmd.toString() + os.EOL)
+  console.log('Creating output using Environment File - GITHUB_OUTPUT: ', cmd.toString() + os.EOL)
 }
 exports.issueSetOutputCommand = issueSetOutputCommand;
 function issueSetOutput(envName, envValue) {
@@ -2081,7 +2081,8 @@ class OutputCommand {
       this.envValue = envValue;
   }
   toString() {
-    let cmdStr = `"${this.envName}=${this.envValue}" >> $GITHUB_OUTPUT`;
+    // let cmdStr = `"${this.envName}=${this.envValue}" >> $GITHUB_OUTPUT`;
+    let cmdStr = `"${this.envName}=${this.envValue}"`;
     return cmdStr;
   }
 }
@@ -3890,26 +3891,24 @@ exports.getInput = getInput;
  * @param     name     name of the output to set
  * @param     value    value to store
  */
-function setOutput(name, value) {
-    // command_1.issueCommand('set-output', { name }, value);
-}
+// function setOutput(name, value) {
+//     // command_1.issueCommand('set-output', { name }, value);
+// }
 exports.setOutput = setOutput;
 
 const childProcess = __webpack_require__(129);
 const util_1 = __webpack_require__(669);
 const exec = util_1.promisify(childProcess.exec);
 
-function setOutput2(name, value) {
-  // command_1.issueCommand('set-output', { name }, value);
+function setOutputUpdated(name, value) {
   command_1.issueSetOutputCommand(name, value)
-  console.log('SET_OUTPUT_2 Function inputs: ', name, value)
   exec(`echo "${name}=${value}" >> $GITHUB_OUTPUT`, (error) => {
     if (error) {
         console.error(`Error: ${error.message}`);
     }
   });
 }
-exports.setOutput2 = setOutput2;
+exports.setOutputUpdated = setOutputUpdated;
 //-----------------------------------------------------------------------
 // Results
 //-----------------------------------------------------------------------
