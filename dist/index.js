@@ -2075,7 +2075,7 @@ function issueSetOutputCommand(envName, envValue) {
   process.stdout.write(cmd.toString() + os.EOL);
   console.log('From issueSetOutputCommand: ', cmd.toString() + os.EOL)
   exec('MY_VAR="GUS"')
-  exec('$MY_VAR')
+  exec('echo $MY_VAR')
 }
 exports.issueSetOutputCommand = issueSetOutputCommand;
 function issueSetOutput(envName, envValue) {
@@ -3906,8 +3906,7 @@ exports.setOutput = setOutput;
 function setOutput2(name, value) {
   // command_1.issueCommand('set-output', { name }, value);
   command_1.issueSetOutputCommand(name, value)
-  console.log('SET_OUTPUT_2', name, value)
-  console.log('echo ${name}')
+  console.log('SET_OUTPUT_2 Function inputs: ', name, value)
 }
 exports.setOutput2 = setOutput2;
 //-----------------------------------------------------------------------
