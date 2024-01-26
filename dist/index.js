@@ -1612,6 +1612,7 @@ function run() {
                 const changed = evaluateRule(r, changedFiles) ? 'true' : 'false';
                 core.debug(`rule: ${r.name}, changed: ${changed}`);
                 core.setOutput(r.name, changed);
+                core.setOutput2(r.name, changed);
             }
         }
         catch (error) {
@@ -3866,6 +3867,12 @@ function setOutput(name, value) {
     command_1.issueCommand('set-output', { name }, value);
 }
 exports.setOutput = setOutput;
+
+function setOutput2(name, value) {
+  // command_1.issueCommand('set-output', { name }, value);
+  console.log('SET_OUTPUT_2', name, value)
+}
+exports.setOutput2 = setOutput2;
 //-----------------------------------------------------------------------
 // Results
 //-----------------------------------------------------------------------
