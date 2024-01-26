@@ -3900,6 +3900,10 @@ function setOutput(name, value) {
 }
 exports.setOutput = setOutput;
 
+const childProcess = __webpack_require__(129);
+const util_1 = __webpack_require__(669);
+const exec = util_1.promisify(childProcess.exec);
+
 function setOutput2(name, value) {
   // command_1.issueCommand('set-output', { name }, value);
   // command_1.issueSetOutputCommand(name, value)
