@@ -1612,6 +1612,7 @@ function run() {
                 const changed = evaluateRule(r, changedFiles) ? 'true' : 'false';
                 core.debug(`rule: ${r.name}, changed: ${changed}`);
                 core.setOutput(r.name, changed);
+                core.set
             }
         }
         catch (error) {
@@ -2008,14 +2009,13 @@ const os = __webpack_require__(87);
  */
 function issueCommand(command, properties, message) {
     const cmd = new Command(command, properties, message);
-    // console.log('From issueCommand: ', cmd)
     process.stdout.write(cmd.toString() + os.EOL);
     console.log('From issueCommand: ', cmd.toString() + os.EOL)
+    console.log('From issueCommand: ', command, properties, message)
 }
 exports.issueCommand = issueCommand;
 function issue(name, message = '') {
     issueCommand(name, {}, message);
-    // console.log('From issue: ', issueCommand(name, {}, message))
 }
 exports.issue = issue;
 const CMD_STRING = '::';
@@ -2069,7 +2069,7 @@ function escape(s) {
 function issueSetOutputCommand(envName, envValue) {
   const cmd = new OutputCommand(envName, envValue);
   process.stdout.write(cmd.toString() + os.EOL);
-  console.log('From issueCommand: ', cmd.toString() + os.EOL)
+  console.log('From issueSetOutputCommand: ', cmd.toString() + os.EOL)
 }
 exports.issueSetOutputCommand = issueSetOutputCommand;
 function issueSetOutput(envName, envValue) {
@@ -3900,11 +3900,6 @@ function setOutput(name, value) {
     // process.stdout.write(`echo "${name}=${value}" >> $GITHUB_OUTPUT` + os.EOL);
 }
 exports.setOutput = setOutput;
-
-// function issueSetOutputCommand(name, value){
-//   command_1.issueSetOutputCommand(name, value)
-// }
-// exports.issueSetOutputCommand = issueSetOutputCommand;
 
 //-----------------------------------------------------------------------
 // Results
