@@ -3894,7 +3894,7 @@ exports.getInput = getInput;
 // function setOutput(name, value) {
 //     // command_1.issueCommand('set-output', { name }, value);
 // }
-exports.setOutput = setOutput;
+// exports.setOutput = setOutput;
 
 const childProcess = __webpack_require__(129);
 const util_1 = __webpack_require__(669);
