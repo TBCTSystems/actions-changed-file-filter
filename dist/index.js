@@ -2011,7 +2011,7 @@ function issueCommand(command, properties, message) {
     const cmd = new Command(command, properties, message);
     process.stdout.write(cmd.toString() + os.EOL);
     console.log('From issueCommand: ', cmd.toString() + os.EOL)
-    console.log('From issueCommand: ', command, properties, message)
+    console.log('From issueCommand- INPUTS: ', command, '---------', properties, '-------', message)
 }
 exports.issueCommand = issueCommand;
 function issue(name, message = '') {
