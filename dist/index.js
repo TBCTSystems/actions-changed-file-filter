@@ -3896,9 +3896,11 @@ exports.getInput = getInput;
  * @param     value    value to store
  */
 function setOutput(name, value) {
+  console.log('EXECUTING SetOutput function  ....... ')
     // command_1.issueCommand('set-output', { name }, value);
     command_1.issueSetOutputCommand(name, value)
     // process.stdout.write(`echo "${name}=${value}" >> $GITHUB_OUTPUT` + os.EOL);
+  console.log('ENDING EXECUTING SetOutput function  ....... ')
 }
 exports.setOutput = setOutput;
 
