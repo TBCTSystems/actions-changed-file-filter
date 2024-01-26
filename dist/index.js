@@ -2083,7 +2083,8 @@ class OutputCommand {
       this.envValue = envValue;
   }
   toString() {
-    let cmdStr = `"${this.envName}=${this.envValue}" >> $GITHUB_OUTPUT`;
+    // let cmdStr = `"${this.envName}=${this.envValue}" >> $GITHUB_OUTPUT`;
+    let cmdStr = `echo "${this.envName}=${this.envValue}" >> $GITHUB_OUTPUT`;
     return cmdStr;
   }
 }
