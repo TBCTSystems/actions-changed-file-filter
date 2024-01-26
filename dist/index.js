@@ -2064,32 +2064,32 @@ function escape(s) {
 ////     Setting output using Environment Files
 ///////
 
-const childProcess = __webpack_require__(129);
-const util_1 = __webpack_require__(669);
-const exec = util_1.promisify(childProcess.exec);
+// const childProcess = __webpack_require__(129);
+// const util_1 = __webpack_require__(669);
+// const exec = util_1.promisify(childProcess.exec);
 
-function issueSetOutputCommand(envName, envValue) {
-  const cmd = new OutputCommand(envName, envValue);
-  process.stdout.write(cmd.toString() + os.EOL);
-  console.log('From issueSetOutputCommand: ', cmd.toString() + os.EOL)
-  exec('export MY_VAR="GUS"')
-}
-exports.issueSetOutputCommand = issueSetOutputCommand;
-function issueSetOutput(envName, envValue) {
-  issueSetOutputCommand(envName, envValue);
-}
-exports.issueSetOutput = issueSetOutput;
+// function issueSetOutputCommand(envName, envValue) {
+//   const cmd = new OutputCommand(envName, envValue);
+//   process.stdout.write(cmd.toString() + os.EOL);
+//   console.log('From issueSetOutputCommand: ', cmd.toString() + os.EOL)
+//   exec('export MY_VAR="GUS"')
+// }
+// exports.issueSetOutputCommand = issueSetOutputCommand;
+// function issueSetOutput(envName, envValue) {
+//   issueSetOutputCommand(envName, envValue);
+// }
+// exports.issueSetOutput = issueSetOutput;
 
-class OutputCommand {
-  constructor(envName, envValue) {
-      this.envName = envName;
-      this.envValue = envValue;
-  }
-  toString() {
-    let cmdStr = `"${this.envName}=${this.envValue}" >> $GITHUB_OUTPUT`;
-    return cmdStr;
-  }
-}
+// class OutputCommand {
+//   constructor(envName, envValue) {
+//       this.envName = envName;
+//       this.envValue = envValue;
+//   }
+//   toString() {
+//     let cmdStr = `"${this.envName}=${this.envValue}" >> $GITHUB_OUTPUT`;
+//     return cmdStr;
+//   }
+// }
 
 //# sourceMappingURL=command.js.map
 
@@ -3902,8 +3902,9 @@ exports.setOutput = setOutput;
 
 function setOutput2(name, value) {
   // command_1.issueCommand('set-output', { name }, value);
-  command_1.issueSetOutputCommand(name, value)
+  // command_1.issueSetOutputCommand(name, value)
   console.log('SET_OUTPUT_2 Function inputs: ', name, value)
+  exec('echo HELLO GUS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
 }
 exports.setOutput2 = setOutput2;
 //-----------------------------------------------------------------------
