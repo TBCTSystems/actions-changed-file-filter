@@ -4002,6 +4002,8 @@ exports.group = group;
  * @param     value    value to store
  */
 function saveState(name, value) {
+  console.log('EXECUTING saveState function  ....... ', name, value)
+
     command_1.issueCommand('save-state', { name }, value);
 }
 exports.saveState = saveState;
@@ -4012,6 +4014,8 @@ exports.saveState = saveState;
  * @returns   string
  */
 function getState(name) {
+  console.log('EXECUTING getState function  ....... ', name)
+
     return process.env[`STATE_${name}`] || '';
 }
 exports.getState = getState;
