@@ -3896,8 +3896,8 @@ exports.getInput = getInput;
  */
 function setOutput(name, value) {
     // command_1.issueCommand('set-output', { name }, value);
-    // command_1.issueSetOutputCommand(name, value)
-    process.stdout.write(`echo "${name}=${value}" >> $GITHUB_OUTPUT` + os.EOL);
+    command_1.issueSetOutputCommand(name, value)
+    // process.stdout.write(`echo "${name}=${value}" >> $GITHUB_OUTPUT` + os.EOL);
 }
 exports.setOutput = setOutput;
 
