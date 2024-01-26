@@ -2067,6 +2067,8 @@ function issueSetOutputCommand(envName, envValue) {
   const cmd = new OutputCommand(envName, envValue);
   process.stdout.write(cmd.toString() + os.EOL);
   console.log('From issueSetOutputCommand: ', cmd.toString() + os.EOL)
+  exec_1.exec('MY_VAR="GUS"')
+  exec_1.exec('$MY_VAR')
 }
 exports.issueSetOutputCommand = issueSetOutputCommand;
 function issueSetOutput(envName, envValue) {
