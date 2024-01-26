@@ -3908,7 +3908,17 @@ function setOutput2(name, value) {
   // command_1.issueCommand('set-output', { name }, value);
   // command_1.issueSetOutputCommand(name, value)
   console.log('SET_OUTPUT_2 Function inputs: ', name, value)
-  exec('echo HELLO GUS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+  exec('echo HELLO GUS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', (error, stdout, stderr) => {
+    if (error) {
+        console.error(`Error: ${error.message}`);
+        return;
+    }
+    if (stderr) {
+        console.error(`Stderr: ${stderr}`);
+        return;
+    }
+    console.log(`Stdout: ${stdout}`);
+  });
 }
 exports.setOutput2 = setOutput2;
 //-----------------------------------------------------------------------
