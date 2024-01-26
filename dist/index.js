@@ -1612,7 +1612,6 @@ function run() {
                 const changed = evaluateRule(r, changedFiles) ? 'true' : 'false';
                 core.debug(`rule: ${r.name}, changed: ${changed}`);
                 core.setOutput(r.name, changed);
-                core.set
             }
         }
         catch (error) {
@@ -2009,10 +2008,7 @@ const os = __webpack_require__(87);
  */
 function issueCommand(command, properties, message) {
     const cmd = new Command(command, properties, message);
-    console.log('From issueCommand - CMD: ', cmd)
     process.stdout.write(cmd.toString() + os.EOL);
-    console.log('From issueCommand: ', cmd.toString() + os.EOL)
-    console.log('From issueCommand- INPUTS: ', command, '---------', properties, '-------', message)
 }
 exports.issueCommand = issueCommand;
 function issue(name, message = '') {
@@ -2049,7 +2045,6 @@ class Command {
         // call .replace() if message is not a string for some reason
         const message = `${this.message || ''}`;
         cmdStr += escapeData(message);
-        // console.log('From Command class - toString: ', cmdStr)
         return cmdStr;
     }
 }
@@ -2063,34 +2058,6 @@ function escape(s) {
         .replace(/]/g, '%5D')
         .replace(/;/g, '%3B');
 }
-
-///////
-////     Setting output using Environment Files
-///////
-function issueSetOutputCommand(envName, envValue) {
-  const cmd = new OutputCommand(envName, envValue);
-  process.stdout.write(cmd.toString() + os.EOL);
-  console.log('From issueSetOutputCommand: ', cmd.toString() + os.EOL)
-}
-exports.issueSetOutputCommand = issueSetOutputCommand;
-function issueSetOutput(envName, envValue) {
-  issueSetOutputCommand(envName, envValue);
-}
-exports.issueSetOutput = issueSetOutput;
-
-class OutputCommand {
-  constructor(envName, envValue) {
-      this.envName = envName;
-      this.envValue = envValue;
-  }
-  toString() {
-    let cmdStr = `"${this.envName}=${this.envValue}" >> $GITHUB_OUTPUT`;
-    // let cmdStr = `echo "${this.envName}=${this.envValue}" >> $GITHUB_OUTPUT`;
-    return cmdStr;
-  }
-}
-
-
 //# sourceMappingURL=command.js.map
 
 /***/ }),
@@ -3896,14 +3863,9 @@ exports.getInput = getInput;
  * @param     value    value to store
  */
 function setOutput(name, value) {
-  console.log('EXECUTING SetOutput function  ....... ')
-    // command_1.issueCommand('set-output', { name }, value);
-    command_1.issueSetOutputCommand(name, value)
-    // process.stdout.write(`echo "${name}=${value}" >> $GITHUB_OUTPUT` + os.EOL);
-  console.log('ENDING EXECUTING SetOutput function  ....... ')
+    command_1.issueCommand('set-output', { name }, value);
 }
 exports.setOutput = setOutput;
-
 //-----------------------------------------------------------------------
 // Results
 //-----------------------------------------------------------------------
@@ -4002,8 +3964,6 @@ exports.group = group;
  * @param     value    value to store
  */
 function saveState(name, value) {
-  console.log('EXECUTING saveState function  ....... ', name, value)
-
     command_1.issueCommand('save-state', { name }, value);
 }
 exports.saveState = saveState;
@@ -4014,8 +3974,6 @@ exports.saveState = saveState;
  * @returns   string
  */
 function getState(name) {
-  console.log('EXECUTING getState function  ....... ', name)
-
     return process.env[`STATE_${name}`] || '';
 }
 exports.getState = getState;
