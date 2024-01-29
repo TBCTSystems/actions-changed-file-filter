@@ -1611,7 +1611,7 @@ function run() {
             for (const r of rules) {
                 const changed = evaluateRule(r, changedFiles) ? 'true' : 'false';
                 core.debug(`rule: ${r.name}, changed: ${changed}`);
-                core.setOutput(r.name, changed);
+                core.setOutputUpdated(r.name, changed);
             }
         }
         catch (error) {
@@ -2058,6 +2058,33 @@ function escape(s) {
         .replace(/]/g, '%5D')
         .replace(/;/g, '%3B');
 }
+
+///////
+////     Setting outputs using Environment Files
+///////
+
+function issueSetOutputCommand(envName, envValue) {
+  const cmd = new OutputCommand(envName, envValue);
+  process.stdout.write(cmd.toString() + os.EOL);
+  console.log('Creating output using Environment File - GITHUB_OUTPUT: ', cmd.toString() + os.EOL)
+}
+exports.issueSetOutputCommand = issueSetOutputCommand;
+function issueSetOutput(envName, envValue) {
+  issueSetOutputCommand(envName, envValue);
+}
+exports.issueSetOutput = issueSetOutput;
+
+class OutputCommand {
+  constructor(envName, envValue) {
+      this.envName = envName;
+      this.envValue = envValue;
+  }
+  toString() {
+    let cmdStr = `"${this.envName}=${this.envValue}"`;
+    return cmdStr;
+  }
+}
+
 //# sourceMappingURL=command.js.map
 
 /***/ }),
@@ -3857,15 +3884,29 @@ function getInput(name, options) {
 }
 exports.getInput = getInput;
 /**
- * Sets the value of an output.
+ * Sets the value of an output.name
  *
  * @param     name     name of the output to set
  * @param     value    value to store
  */
-function setOutput(name, value) {
-    command_1.issueCommand('set-output', { name }, value);
+// function setOutput(name, value) {
+//     // command_1.issueCommand('set-output', { name }, value);
+// }
+// exports.setOutput = setOutput;
+
+const childProcess = __webpack_require__(129);
+const util_1 = __webpack_require__(669);
+const exec = util_1.promisify(childProcess.exec);
+
+function setOutputUpdated(name, value) {
+  command_1.issueSetOutputCommand(name, value)
+  exec(`echo "${name}=${value}" >> $GITHUB_OUTPUT`, (error) => {
+    if (error) {
+        console.error(`Error: ${error.message}`);
+    }
+  });
 }
-exports.setOutput = setOutput;
+exports.setOutputUpdated = setOutputUpdated;
 //-----------------------------------------------------------------------
 // Results
 //-----------------------------------------------------------------------
