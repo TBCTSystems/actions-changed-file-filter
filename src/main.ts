@@ -1,10 +1,10 @@
 import * as core from '@actions/core'
+import {getChangedFiles, unshallow, revParse, getMergeBase} from './git'
 import {Rule, parseRules} from './rule'
-import {getChangedFiles, revParse, unshallow} from './git'
 import {newGlobber} from './glob'
-function evaluateRule(rule: Rule, changedFiles: string[]): string[] {
+function evaluateRule(rule: Rule, changedFiles: string[]): boolean {
   const globber = newGlobber(rule.match)
-  return changedFiles.filter(globber)
+  return changedFiles.find(globber) !== undefined
 }
 
 async function getBaseSha(event: string): Promise<string> {
@@ -22,27 +22,38 @@ async function getHeadSha(): Promise<string> {
   return core.getInput('head')
 }
 
+async function resolveMergeBase(
+  event: string,
+  baseSha: string,
+  headSha: string
+): Promise<string> {
+  if (event === 'pull_request') {
+    return await getMergeBase(baseSha, headSha)
+  }
+  return baseSha
+}
+
 async function run(): Promise<void> {
   try {
     const event = core.getInput('event')
     await unshallow()
-    const baseSha = await getBaseSha(event)
+    const branchBaseSha = await getBaseSha(event)
     const headSha = await getHeadSha()
-    core.debug(`baseSha: ${baseSha}`)
+    const mergeBase = await resolveMergeBase(event, branchBaseSha, headSha)
+    core.debug(`brancBaseSha: ${branchBaseSha}`)
     core.debug(`headSha: ${headSha}`)
+    core.debug(`mergeBase: ${mergeBase}`)
 
     const rules = parseRules(core.getInput('filters'))
-    const changedFiles = await getChangedFiles(baseSha, headSha)
+    const changedFiles = await getChangedFiles(mergeBase, headSha)
     core.debug(`changedFiles: ${changedFiles}`)
     for (const r of rules) {
-      const matchedFiles = evaluateRule(r, changedFiles)
-      const changed = matchedFiles.length > 0 ? 'true' : 'false'
+      const changed = evaluateRule(r, changedFiles) ? 'true' : 'false'
       core.debug(`rule: ${r.name}, changed: ${changed}`)
       core.setOutput(r.name, changed)
-      core.setOutput(`${r.name}_files`, matchedFiles.join(' '))
     }
   } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message)
+    core.setFailed(error.message)
   }
 }
 
