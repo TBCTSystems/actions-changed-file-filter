@@ -4051,8 +4051,85 @@ function writeBlockSequence(state, level, object, compact) {
     }
   }
 
-  state.tag = _tag;
-  state.dump = _result || '[]'; // Empty sequence if no valid values.
+// <<<<<<< feature/gvegusb/outputs-env-file
+//   state.tag = _tag;
+//   state.dump = _result || '[]'; // Empty sequence if no valid values.
+// =======
+// var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+//     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+//     return new (P || (P = Promise))(function (resolve, reject) {
+//         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+//         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+//         function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+//         step((generator = generator.apply(thisArg, _arguments || [])).next());
+//     });
+// };
+// var __importStar = (this && this.__importStar) || function (mod) {
+//     if (mod && mod.__esModule) return mod;
+//     var result = {};
+//     if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+//     result["default"] = mod;
+//     return result;
+// };
+// Object.defineProperty(exports, "__esModule", { value: true });
+// const core = __importStar(__webpack_require__(470));
+// const git_1 = __webpack_require__(453);
+// const rule_1 = __webpack_require__(902);
+// const glob_1 = __webpack_require__(85);
+// function evaluateRule(rule, changedFiles) {
+//     const globber = glob_1.newGlobber(rule.match);
+//     return changedFiles.find(globber) !== undefined;
+// }
+// function getBaseSha(event) {
+//     return __awaiter(this, void 0, void 0, function* () {
+//         if (event === 'push') {
+//             return git_1.revParse('HEAD^');
+//         }
+//         return core.getInput('base');
+//     });
+// }
+// function getHeadSha() {
+//     return __awaiter(this, void 0, void 0, function* () {
+//         const headRef = core.getInput('head-ref');
+//         if (headRef.length > 0) {
+//             return git_1.revParse(headRef);
+//         }
+//         return core.getInput('head');
+//     });
+// }
+// function resolveMergeBase(event, baseSha, headSha) {
+//     return __awaiter(this, void 0, void 0, function* () {
+//         if (event === 'pull_request') {
+//             return yield git_1.getMergeBase(baseSha, headSha);
+//         }
+//         return baseSha;
+//     });
+// }
+// function run() {
+//     return __awaiter(this, void 0, void 0, function* () {
+//         try {
+//             const event = core.getInput('event');
+//             yield git_1.unshallow();
+//             const branchBaseSha = yield getBaseSha(event);
+//             const headSha = yield getHeadSha();
+//             const mergeBase = yield resolveMergeBase(event, branchBaseSha, headSha);
+//             core.debug(`brancBaseSha: ${branchBaseSha}`);
+//             core.debug(`headSha: ${headSha}`);
+//             core.debug(`mergeBase: ${mergeBase}`);
+//             const rules = rule_1.parseRules(core.getInput('filters'));
+//             const changedFiles = yield git_1.getChangedFiles(mergeBase, headSha);
+//             core.debug(`changedFiles: ${changedFiles}`);
+//             for (const r of rules) {
+//                 const changed = evaluateRule(r, changedFiles) ? 'true' : 'false';
+//                 core.debug(`rule: ${r.name}, changed: ${changed}`);
+//                 core.setOutput(r.name, changed);
+//             }
+//         }
+//         catch (error) {
+//             core.setFailed(error.message);
+//         }
+//     });
+// >>>>>>> master
 }
 
 function writeFlowMapping(state, level, object) {
@@ -4456,7 +4533,85 @@ YAMLException.prototype.toString = function toString(compact) {
 };
 
 
-module.exports = YAMLException;
+// <<<<<<< feature/gvegusb/outputs-env-file
+// module.exports = YAMLException;
+// =======
+// var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+//     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+//     return new (P || (P = Promise))(function (resolve, reject) {
+//         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+//         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+//         function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+//         step((generator = generator.apply(thisArg, _arguments || [])).next());
+//     });
+// };
+// Object.defineProperty(exports, "__esModule", { value: true });
+// const exec_1 = __webpack_require__(986);
+// function getChangedFiles(baseSha, headSha, cwd) {
+//     return __awaiter(this, void 0, void 0, function* () {
+//         return new Promise((resolve, reject) => {
+//             try {
+//                 exec_1.exec('git', ['diff', '--name-only', `${baseSha}..${headSha}`, '--'], {
+//                     cwd,
+//                     listeners: {
+//                         stdout: buffer => resolve(buffer
+//                             .toString()
+//                             .split('\n')
+//                             .map(x => x.trim())
+//                             .filter(x => x.length > 0))
+//                     }
+//                 }).catch(reject);
+//             }
+//             catch (err) {
+//                 reject(err);
+//             }
+//         });
+//     });
+// }
+// exports.getChangedFiles = getChangedFiles;
+// function revParse(rev, cwd) {
+//     return __awaiter(this, void 0, void 0, function* () {
+//         return new Promise((resolve, reject) => {
+//             try {
+//                 exec_1.exec('git', ['rev-parse', rev], {
+//                     cwd,
+//                     listeners: {
+//                         stdout: buffer => resolve(buffer.toString().trim())
+//                     }
+//                 }).catch(reject);
+//             }
+//             catch (err) {
+//                 reject(err);
+//             }
+//         });
+//     });
+// }
+// exports.revParse = revParse;
+// function unshallow() {
+//     return __awaiter(this, void 0, void 0, function* () {
+//         return exec_1.exec('git', ['fetch', '--prune', '--unshallow']);
+//     });
+// }
+// exports.unshallow = unshallow;
+// function getMergeBase(baseSha, headSha, cwd) {
+//     return __awaiter(this, void 0, void 0, function* () {
+//         return new Promise((resolve, reject) => {
+//             try {
+//                 exec_1.exec('git', ['merge-base', `${baseSha}`, `${headSha}`], {
+//                     cwd,
+//                     listeners: {
+//                         stdout: buffer => resolve(buffer.toString().trim())
+//                     }
+//                 }).catch(reject);
+//             }
+//             catch (err) {
+//                 reject(err);
+//             }
+//         });
+//     });
+// }
+// exports.getMergeBase = getMergeBase;
+// >>>>>>> master
 
 
 /***/ }),
