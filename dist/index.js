@@ -64,7 +64,24 @@ function unshallow() {
     });
 }
 exports.unshallow = unshallow;
-
+function getMergeBase(baseSha, headSha, cwd) {
+  return __awaiter(this, void 0, void 0, function* () {
+      return new Promise((resolve, reject) => {
+          try {
+              exec_1.exec('git', ['merge-base', `${baseSha}`, `${headSha}`], {
+                  cwd,
+                  listeners: {
+                      stdout: buffer => resolve(buffer.toString().trim())
+                  }
+              }).catch(reject);
+          }
+          catch (err) {
+              reject(err);
+          }
+      });
+  });
+}
+exports.getMergeBase = getMergeBase;
 
 /***/ }),
 
