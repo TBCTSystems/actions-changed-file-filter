@@ -53,7 +53,7 @@ async function run(): Promise<void> {
       core.setOutput(r.name, changed)
     }
   } catch (error) {
-    core.setFailed(error.message)
+    if (error instanceof Error) core.setFailed(error.message)
   }
 }
 
