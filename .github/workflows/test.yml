@@ -114,7 +114,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       test_files: ${{ steps.test_files_step.outputs.test_files }}
-      a_files: ${{ steps.test_files_step.outputs.a_file }}
+      a_files: ${{ steps.test_files_step.outputs.a_files }}
     steps:
       - uses: actions/checkout@v2
       - name: Setup Committer Info
@@ -129,6 +129,11 @@ jobs:
           touch b.txt && \
           git add a.txt b.txt && \
           git commit -m "add txt files"
+
+          if [[ -f a.txt ]]; then
+            echo "a.txt exist."
+            echo "a_files=a.txt" >> $GITHUB_ENV
+          fi
       - uses: ./
         id: filter
         with:
@@ -154,10 +159,7 @@ jobs:
           #   echo "test_files='a.txt b.txt'" >> $GITHUB_ENV
           # fi
 
-          if [[ -f a.txt ]]; then
-            echo "a.txt exist."
-            echo "a_files=a.txt" >> $GITHUB_ENV
-          fi
+
     
           [[ "${{ steps.filter.outputs.test }}" = "true" ]] &&
           [[ "${{ steps.test_files_step.outputs.test_files }}" = "a.txt b.txt" ]] &&
