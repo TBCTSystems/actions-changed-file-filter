@@ -41,11 +41,6 @@ jobs:
         touch testzone/touched.txt && \
         git add testzone/touched.txt && \
         git commit -m "add testzone/touched.txt"
-
-        pwd
-        ls -la
-        cd testzone
-        ls
     - uses: ./
       id: filter
       with:
@@ -56,8 +51,6 @@ jobs:
         head: 'HEAD'
     - name: Check Output
       run: |
-        echo "Test Output: ${{ steps.filter.outputs.test }}"
-        echo "Test Files Output: ${{ steps.filter.outputs.test_files }}"
         [[ "${{ steps.filter.outputs.test }}" = "true" ]] &&
         [[ "${{ steps.filter.outputs.test_files }}" = "testzone/touched.txt" ]]
   # test case of issue #7
