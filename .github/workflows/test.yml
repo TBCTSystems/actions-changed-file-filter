@@ -132,12 +132,12 @@ jobs:
 
           if [[ -f a.txt ]]; then
             echo "a.txt exist."
-            echo "a_files='a.txt'" >> $GITHUB_OUTPUT
+            echo "a_files=a.txt" >> $GITHUB_OUTPUT
           fi
 
           if [[ -f a.txt && -f b.txt ]]; then
             echo "Both a.txt and b.txt exist."
-            echo "test_files='a.txt b.txt'" >> $GITHUB_OUTPUT
+            echo "test_files=a.txt b.txt" >> $GITHUB_OUTPUT
           fi
       - uses: ./
         id: filter
