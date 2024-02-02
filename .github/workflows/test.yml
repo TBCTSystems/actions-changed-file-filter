@@ -112,6 +112,9 @@ jobs:
         run: '[[ "${{ steps.filter.outputs.test }}" = "false" && "${{ steps.filter.outputs.this_pr }}" = "true" ]]'
   test-4:
     runs-on: ubuntu-latest
+    outputs:
+      test_files: ${{ steps.test_files_step.outputs.test_files }}
+      a_files: ${{ steps.test_files_step.outputs.a_file }}
     steps:
       - uses: actions/checkout@v2
       - name: Setup Committer Info
@@ -120,6 +123,7 @@ jobs:
           git config user.email 'action@github.com'
       # add a fake commit
       - name: Add Commit
+        id: test_files_step
         run: |
           touch a.txt && \
           touch b.txt && \
@@ -144,6 +148,17 @@ jobs:
 
           pwd
           ls -la
+          
+          if [[ -f a.txt && -f b.txt ]]; then
+            echo "Both a.txt and b.txt exist."
+            echo "test_files=a.txt b.txt" >> $GITHUB_ENV
+          fi
+
+          if [[ -f a.txt ]]; then
+            echo "Both a.txt exist."
+            echo "a_files=a.txt" >> $GITHUB_ENV
+          fi
+    
           [[ "${{ steps.filter.outputs.test }}" = "true" ]] &&
           [[ "${{ steps.filter.outputs.test_files }}" = "a.txt b.txt" ]] &&
           [[ "${{ steps.filter.outputs.a }}" = "true" ]] &&
