@@ -48,9 +48,7 @@ jobs:
         echo '------------------------'
         pwd
         ls -la
-        cd testzone
-        echo 'CURRENT-------------'
-        pwd
+        [[ -d testzone && -f testzone/touched.txt ]] && echo "Folder and file exist" || echo "Folder or file does not exist"
     - uses: ./
       id: filter
       with:
