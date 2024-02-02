@@ -28,17 +28,30 @@ jobs:
       run: '[[ "${{ steps.filter.outputs.test }}" = "false" ]]'
   test-2:
     runs-on: ubuntu-latest
+    outputs:
+      test_file: ${{ steps.test_file.outputs.test_file }}
     steps:
     - uses: actions/checkout@v2
+    - name: Setup Committer Info
+      run: |
+        git config user.name 'Github Action' && \
+        git config user.email 'action@github.com'
     # add a fake commit
     - name: Add Commit
+      id: test_file 
       run: | 
         mkdir testzone && \
         touch testzone/touched.txt && \
-        git config user.name 'Github Action' && \
-        git config user.email 'action@github.com' && \
         git add testzone/touched.txt && \
         git commit -m "add testzone/touched.txt"
+
+        echo '------------------------'
+        pwd
+        ls -la
+        [[ -d testzone && -f testzone/touched.txt ]] && echo "Folder and file exist" || echo "Folder or file does not exist"
+        if [[ -d testzone && -f testzone/touched.txt ]]; then
+          echo "test_file=testzone/touched.txt" >> $GITHUB_OUTPUT
+        fi
     - uses: ./
       id: filter
       with:
@@ -48,5 +61,105 @@ jobs:
         # Override ${{ github.event.pull_request.head.sha }} to HEAD for testing
         head: 'HEAD'
     - name: Check Output
-      run: '[[ "${{ steps.filter.outputs.test }}" = "true" ]]'
-    
+      run: |
+        [[ "${{ steps.filter.outputs.test }}" = "true" ]] &&
+        [[ "${{ steps.test_file.outputs.test_file }}" = "testzone/touched.txt" ]]
+  # test case of issue #7
+  test-3:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Committer Info
+        run: |
+          git config user.name 'Github Action' && \
+          git config user.email 'action@github.com'
+      - name: Add Commit
+        id: add_commit
+        run: |
+          git fetch --depth=1 origin ${{ github.event.pull_request.base.sha }} && \
+          git checkout -b this_pr && \
+          mkdir testzone && \
+          touch testzone/added_by_this_pr.txt && \
+          git add testzone/added_by_this_pr.txt && \
+          git commit -m "add by this PR" && \
+          echo "::set-output name=head::$(git rev-parse HEAD)"
+      - name: Move Base
+        id: move_base
+        run: |
+          git fetch --depth=1 origin ${{ github.event.pull_request.base.sha }} && \
+          git checkout -b base ${{ github.event.pull_request.base.sha }} && \
+          mkdir testzone_1 && \
+          touch testzone_1/added_by_other_pr.txt && \
+          git add testzone_1/added_by_other_pr.txt  && \
+          git commit -m "another merged PR" && \
+          echo "::set-output name=base::$(git rev-parse HEAD)" && \
+          git checkout this_pr
+      - uses: ./
+        id: filter
+        with:
+          # for testing, set the base to moved base, simulating the situation that the base changed (probably another PR
+          # got merged into the master)
+          base: ${{ steps.move_base.outputs.base }}
+          head: ${{ steps.add_commit.outputs.head }}
+          filters: |
+            this_pr:
+              - testzone/*.txt
+            test:
+              - testzone_1/*.txt
+      - name: Check Output
+        # Although "base" has a additional commit modifying the file matching  "testzone_1/*.txt" (testzone_1/added_by_other_pr.txt),
+        # the file is already merged in the "base"
+        run: '[[ "${{ steps.filter.outputs.test }}" = "false" && "${{ steps.filter.outputs.this_pr }}" = "true" ]]'
+  test-4:
+    runs-on: ubuntu-latest
+    outputs:
+      test_files: ${{ steps.test_files_step.outputs.test_files }}
+      a_files: ${{ steps.test_files_step.outputs.a_files }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Committer Info
+        run: |
+          git config user.name 'Github Action' && \
+          git config user.email 'action@github.com'
+      # add a fake commit
+      - name: Add Commit
+        id: test_files_step
+        run: |
+          touch a.txt && \
+          touch b.txt && \
+          git add a.txt b.txt && \
+          git commit -m "add txt files"
+
+          if [[ -f a.txt ]]; then
+            echo "a.txt exist."
+            echo "a_files=a.txt" >> $GITHUB_OUTPUT
+          fi
+
+          if [[ -f a.txt && -f b.txt ]]; then
+            echo "Both a.txt and b.txt exist."
+            echo "test_files=a.txt b.txt" >> $GITHUB_OUTPUT
+          fi
+      - uses: ./
+        id: filter
+        with:
+          filters: |
+            test:
+              - '*.txt'
+            a:
+              - a.txt
+          # Override ${{ github.event.pull_request.head.sha }} to HEAD for testing
+          head: 'HEAD'
+      - name: Check Output
+        run: |
+          echo "Test Output: ${{ steps.filter.outputs.test }}"
+          echo "Test Files Output: ${{ steps.test_files_step.outputs.test_files }}"
+          echo "A Output: ${{ steps.filter.outputs.a }}"
+          echo "A_FILES Files Output: ${{ steps.test_files_step.outputs.a_files }}"
+
+          pwd
+          ls -la
+           
+          [[ "${{ steps.filter.outputs.test }}" = "true" ]] &&
+          [[ "${{ steps.test_files_step.outputs.test_files }}" = "a.txt b.txt" ]] &&
+          [[ "${{ steps.filter.outputs.a }}" = "true" ]] &&
+          [[ "${{ steps.test_files_step.outputs.a_files }}" = "a.txt" ]]
