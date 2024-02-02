@@ -142,9 +142,9 @@ jobs:
       - name: Check Output
         run: |
           echo "Test Output: ${{ steps.filter.outputs.test }}"
-          echo "Test Files Output: ${{ steps.filter.outputs.test_files }}"
+          echo "Test Files Output: ${{ steps.test_files_step.outputs.test_files }}"
           echo "A Output: ${{ steps.filter.outputs.a }}"
-          echo "A_FILES Files Output: ${{ steps.filter.outputs.a_files }}"
+          echo "A_FILES Files Output: ${{ steps.test_files_step.outputs.a_files }}"
 
           pwd
           ls -la
@@ -160,6 +160,6 @@ jobs:
           fi
     
           [[ "${{ steps.filter.outputs.test }}" = "true" ]] &&
-          [[ "${{ steps.filter.outputs.test_files }}" = "a.txt b.txt" ]] &&
+          [[ "${{ steps.test_files_step.outputs.test_files }}" = "a.txt b.txt" ]] &&
           [[ "${{ steps.filter.outputs.a }}" = "true" ]] &&
-          [[ "${{ steps.filter.outputs.a_files }}" = "a.txt" ]]
+          [[ "${{ steps.test_files_step.outputs.a_files }}" = "a.txt" ]]
