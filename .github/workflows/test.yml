@@ -149,10 +149,10 @@ jobs:
           pwd
           ls -la
           
-          if [[ -f a.txt && -f b.txt ]]; then
-            echo "Both a.txt and b.txt exist."
-            echo "test_files='a.txt b.txt'" >> $GITHUB_ENV
-          fi
+          # if [[ -f a.txt && -f b.txt ]]; then
+          #   echo "Both a.txt and b.txt exist."
+          #   echo "test_files='a.txt b.txt'" >> $GITHUB_ENV
+          # fi
 
           if [[ -f a.txt ]]; then
             echo "a.txt exist."
