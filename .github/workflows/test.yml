@@ -49,6 +49,9 @@ jobs:
         pwd
         ls -la
         [[ -d testzone && -f testzone/touched.txt ]] && echo "Folder and file exist" || echo "Folder or file does not exist"
+        if [[ -d testzone && -f testzone/touched.txt ]]; then
+          echo "test_file=testzone/touched.txt" >> $GITHUB_OUTPUT
+        fi
     - uses: ./
       id: filter
       with:
@@ -60,7 +63,7 @@ jobs:
     - name: Check Output
       run: |
         [[ "${{ steps.filter.outputs.test }}" = "true" ]] &&
-        [[ "${{ steps.filter.outputs.test_files }}" = "testzone/touched.txt" ]]
+        [[ "${{ steps.test_file.outputs.test_file }}" = "testzone/touched.txt" ]]
   # test case of issue #7
   test-3:
     runs-on: ubuntu-latest
