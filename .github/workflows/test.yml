@@ -141,6 +141,9 @@ jobs:
           echo "Test Files Output: ${{ steps.filter.outputs.test_files }}"
           echo "A Output: ${{ steps.filter.outputs.a }}"
           echo "A_FILES Files Output: ${{ steps.filter.outputs.a_files }}"
+
+          pwd
+          ls -la
           [[ "${{ steps.filter.outputs.test }}" = "true" ]] &&
           [[ "${{ steps.filter.outputs.test_files }}" = "a.txt b.txt" ]] &&
           [[ "${{ steps.filter.outputs.a }}" = "true" ]] &&
