@@ -2,7 +2,7 @@
 
 # changed-file-filter
 
-Determine changed files between base and current(head) commits..
+Determine changed files between base and current(head) commits.
 
 ## Usage
 
