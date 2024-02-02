@@ -48,6 +48,9 @@ jobs:
         echo '------------------------'
         pwd
         ls -la
+        cd testzone
+        echo 'CURRENT-------------'
+        pwd
     - uses: ./
       id: filter
       with:
