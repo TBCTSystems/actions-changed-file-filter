@@ -41,6 +41,11 @@ jobs:
         touch testzone/touched.txt && \
         git add testzone/touched.txt && \
         git commit -m "add testzone/touched.txt"
+
+        pwd
+        ls -la
+        cd testzone
+        ls
     - uses: ./
       id: filter
       with:
