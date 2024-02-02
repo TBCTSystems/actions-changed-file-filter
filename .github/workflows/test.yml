@@ -137,6 +137,10 @@ jobs:
           head: 'HEAD'
       - name: Check Output
         run: |
+          echo "Test Output: ${{ steps.filter.outputs.test }}"
+          echo "Test Files Output: ${{ steps.filter.outputs.test_files }}"
+          echo "A Output: ${{ steps.filter.outputs.a }}"
+          echo "A_FILES Files Output: ${{ steps.filter.outputs.a_files }}"
           [[ "${{ steps.filter.outputs.test }}" = "true" ]] &&
           [[ "${{ steps.filter.outputs.test_files }}" = "a.txt b.txt" ]] &&
           [[ "${{ steps.filter.outputs.a }}" = "true" ]] &&
