@@ -132,7 +132,12 @@ jobs:
 
           if [[ -f a.txt ]]; then
             echo "a.txt exist."
-            echo "a_files=a.txt" >> $GITHUB_ENV
+            echo "a_files='a.txt'" >> $GITHUB_ENV
+          fi
+
+          if [[ -f a.txt && -f b.txt ]]; then
+            echo "Both a.txt and b.txt exist."
+            echo "test_files='a.txt b.txt'" >> $GITHUB_ENV
           fi
       - uses: ./
         id: filter
@@ -153,14 +158,7 @@ jobs:
 
           pwd
           ls -la
-          
-          # if [[ -f a.txt && -f b.txt ]]; then
-          #   echo "Both a.txt and b.txt exist."
-          #   echo "test_files='a.txt b.txt'" >> $GITHUB_ENV
-          # fi
-
-
-    
+           
           [[ "${{ steps.filter.outputs.test }}" = "true" ]] &&
           [[ "${{ steps.test_files_step.outputs.test_files }}" = "a.txt b.txt" ]] &&
           [[ "${{ steps.filter.outputs.a }}" = "true" ]] &&
