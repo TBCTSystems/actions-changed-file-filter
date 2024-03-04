@@ -74,6 +74,23 @@ describe('globber returned by newGlobber', () => {
       ]
     },
     {
+      globRules: ['.github/actions/**/*'],
+      expectedMatches: [
+        ['.github/actions/push.yaml', false],
+        ['github/actions/push.yaml', false],
+        ['.github/workflows/automation_nightly.yaml', false],
+        ['.github/actions/build_and_test/action.yaml', true],
+      ]
+    },
+    {
+      globRules: ['.github/workflows/push.yaml'],
+      expectedMatches: [
+        ['github/workflows/push.yaml', false],
+        ['.github/workflows/automation_nightly.yaml', false],
+        ['.github/workflows/push.yaml', true],
+      ]
+    },
+    {
       globRules: ['Eric(?:(?!Automation|ProjectVersion).)+'],
       expectedMatches: [
         ['.github/workflows/push.yaml', false],
@@ -86,6 +103,13 @@ describe('globber returned by newGlobber', () => {
         ['Eric/Automation', false],
         ['Other/Other', false],
         ['a/b/c/d', false]
+      ]
+    },
+    {
+      globRules: ['Eric/OSVersion'],
+      expectedMatches: [
+        ['Eric/OSVersion', true],
+        ['Orion/OSVersion', false],
       ]
     }
   ]
