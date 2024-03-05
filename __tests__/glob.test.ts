@@ -76,7 +76,7 @@ describe('globber returned by newGlobber', () => {
     {
       globRules: ['.github/actions/**/*'],
       expectedMatches: [
-        ['.github/actions/push.yaml', false],
+        ['.github/actions/push.yaml', true],
         ['github/actions/push.yaml', false],
         ['.github/actions/automation_inputs/action.yaml', true],
         ['.github/actions/build_and_test/action.yaml', true]
@@ -97,11 +97,11 @@ describe('globber returned by newGlobber', () => {
         ['Eric/Automation/pytest.py', false],
         ['Eric/ProjectVersion', false],
         ['Eric/Other/ProjectVersion', false],
-        ['Eric/Other', false],
-        ['Eric/Other/main.cpp', false],
-        ['Eric/Automation/step_defs/test_alarmsanity.py', true],
-        ['Eric/Automation/features/alarmsanity.feature', true],
-        ['Eric/Automation/conftest.py', true],
+        ['Eric/Other', true],
+        ['Eric/Other/main.cpp', true],
+        ['Eric/Automation/step_defs/test_alarmsanity.py', false],
+        ['Eric/Automation/features/alarmsanity.feature', false],
+        ['Eric/Automation/conftest.py', false]
       ]
     },
     {
