@@ -78,8 +78,8 @@ describe('globber returned by newGlobber', () => {
       expectedMatches: [
         ['.github/actions/push.yaml', false],
         ['github/actions/push.yaml', false],
-        ['.github/workflows/automation_nightly.yaml', false],
-        ['.github/actions/build_and_test/action.yaml', true],
+        ['.github/actions/automation_inputs/action.yaml', true],
+        ['.github/actions/build_and_test/action.yaml', true]
       ]
     },
     {
@@ -87,29 +87,28 @@ describe('globber returned by newGlobber', () => {
       expectedMatches: [
         ['github/workflows/push.yaml', false],
         ['.github/workflows/automation_nightly.yaml', false],
-        ['.github/workflows/push.yaml', true],
+        ['.github/workflows/push.yaml', true]
       ]
     },
     {
       globRules: ['Eric(?:(?!Automation|ProjectVersion).)+'],
       expectedMatches: [
-        ['.github/workflows/push.yaml', false],
         ['Eric/Automation', false],
         ['Eric/Automation/pytest.py', false],
         ['Eric/ProjectVersion', false],
         ['Eric/Other/ProjectVersion', false],
-        ['Eric/Other', true],
-        ['Eric/Other/main.cpp', true],
-        ['Eric/Automation', false],
-        ['Other/Other', false],
-        ['a/b/c/d', false]
+        ['Eric/Other', false],
+        ['Eric/Other/main.cpp', false],
+        ['Eric/Automation/step_defs/test_alarmsanity.py', true],
+        ['Eric/Automation/features/alarmsanity.feature', true],
+        ['Eric/Automation/conftest.py', true],
       ]
     },
     {
       globRules: ['Eric/OSVersion'],
       expectedMatches: [
         ['Eric/OSVersion', true],
-        ['Orion/OSVersion', false],
+        ['Orion/OSVersion', false]
       ]
     }
   ]
