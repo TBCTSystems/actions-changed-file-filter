@@ -119,7 +119,7 @@ describe('globber returned by newGlobber', () => {
         const testMessage = `${input} ${match ? 'should' : "shouldn't"} match ${
           testCase.globRules
         }`
-        expect(globber(input), testMessage).toEqual(match)
+        expect(globber(input)).toEqual(match)
       }
     }
   })
