@@ -116,10 +116,7 @@ describe('globber returned by newGlobber', () => {
     for (const testCase of testCases) {
       const globber = newGlobber(testCase.globRules)
       for (const [input, match] of testCase.expectedMatches) {
-        const testMessage = `${input} ${match ? 'should' : "shouldn't"} match ${
-          testCase.globRules
-        }`
-        expect(globber(input), testMessage).toEqual(match)
+        expect(globber(input)).toEqual(match)
       }
     }
   })
