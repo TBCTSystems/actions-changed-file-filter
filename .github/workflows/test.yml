@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v6
       with:
           node-version: 24
           registry-url: https://registry.npmjs.org/
@@ -86,7 +86,7 @@ jobs:
           touch testzone/added_by_this_pr.txt && \
           git add testzone/added_by_this_pr.txt && \
           git commit -m "add by this PR" && \
-          echo "::set-output name=head::$(git rev-parse HEAD)"
+          echo "head=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - name: Move Base
         id: move_base
         run: |
@@ -96,7 +96,7 @@ jobs:
           touch testzone_1/added_by_other_pr.txt && \
           git add testzone_1/added_by_other_pr.txt  && \
           git commit -m "another merged PR" && \
-          echo "::set-output name=base::$(git rev-parse HEAD)" && \
+          echo "base=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT" && \
           git checkout this_pr
       - uses: ./
         id: filter
